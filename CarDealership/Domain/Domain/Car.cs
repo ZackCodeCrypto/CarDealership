@@ -1,4 +1,4 @@
-﻿namespace CarDealership;
+﻿namespace CarDealership.Domain;
 
 using System.Text.Json;
 

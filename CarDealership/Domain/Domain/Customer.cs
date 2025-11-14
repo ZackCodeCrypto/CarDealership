@@ -1,4 +1,4 @@
-﻿namespace CarDealership;
+﻿namespace CarDealership.Domain;
 
 public class Customer : Person
 {

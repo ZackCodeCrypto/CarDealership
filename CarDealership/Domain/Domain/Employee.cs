@@ -1,4 +1,4 @@
-﻿namespace CarDealership;
+﻿namespace CarDealership.Domain;
 
 public abstract class Employee : Person
 {

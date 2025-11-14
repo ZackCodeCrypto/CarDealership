@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Tests;
+﻿using CarDealership.Domain;
+
+namespace CarDealership.Tests;
 
 [TestFixture]
 public class CarTests

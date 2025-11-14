@@ -1,0 +1,32 @@
+﻿namespace CarDealership;
+
+public class Accessory
+{
+    private string _name;
+    private decimal _price;
+
+    public string Name
+    {
+        get => _name;
+        set => _name = string.IsNullOrWhiteSpace(value)
+            ? throw new ArgumentException("Name cannot be empty.", nameof(value))
+            : value;
+    }
+
+    public string AccessoryType { get; set; }
+
+    public decimal Price
+    {
+        get => _price;
+        set => _price = value < 0
+            ? throw new ArgumentOutOfRangeException(nameof(value), "Price cannot be negative.")
+            : value;
+    }
+
+    public Accessory(string name, string accessoryType, decimal price)
+    {
+        Name = name;
+        AccessoryType = accessoryType;
+        Price = price;
+    }
+}

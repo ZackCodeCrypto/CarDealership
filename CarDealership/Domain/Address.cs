@@ -21,9 +21,9 @@ public class Address
             : value;
     }
 
-    public string Country { get; set; } = "Canada"; // basic + default
+    public string Country { get; set; } = "United States";
 
-    public Address(string street, string city, string country = "Canada")
+    public Address(string street, string city, string country = "United States")
     {
         Street = street;
         City = city;

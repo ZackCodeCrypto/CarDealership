@@ -5,12 +5,11 @@ namespace CarDealership.Tests;
 [TestFixture]
 public class PersonAndSaleTests
 {
-    private Address Addr => new("Elden St", "Tyson's Corner");
 
     [Test]
     public void OptionalEmail_AllowsNullButNotEmpty()
     {
-        var customer = new Customer("Bob Ross", Addr, "DL123", "Needs car");
+        var customer = new Customer("Bob Ross", "5716785345", "DL123", "Needs car");
         
         customer.Email = null;
 
@@ -22,7 +21,7 @@ public class PersonAndSaleTests
     [Test]
     public void Customer_AddContactNumber_Empty_Throws()
     {
-        var customer = new Customer("Bob Ross", Addr, "DL123", "Needs car");
+        var customer = new Customer("Bob Ross", "5716785345", "DL123", "Needs car");
 
         Assert.That(
             () => customer.AddContactNumber(""),
@@ -32,8 +31,8 @@ public class PersonAndSaleTests
     [Test]
     public void Sale_TotalPrice_ComputedFromParts()
     {
-        var customer = new Customer("Bob Ross", Addr, "DL1", "Needs car");
-        var salesman = new Salesman("Nick Rochefort", Addr, DateTime.Today.AddYears(-1), 40000m);
+        var customer = new Customer("Bob Ross", "5716785345", "DL1", "Needs car");
+        var salesman = new Salesman("Nick Rochefort", "703457456", DateTime.Today.AddYears(-1), 40000m);
         var car = new Car("Model", "Make", 2020, 20000m, UsageType.NewCar);
         var accessory = new Accessory("GPS", "Electronics", 500m);
         var insurance = new InsurancePolicy("P1", "Provider", "Full", 800m);

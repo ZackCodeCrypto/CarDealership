@@ -4,9 +4,6 @@ public class Customer : Person
 {
     private string _driversLicense;
 
-    // Multi-value attribute
-    public List<string> ContactNumbers { get; } = new();
-
     public string DriversLicense
     {
         get => _driversLicense;
@@ -17,13 +14,16 @@ public class Customer : Person
 
     public string DescriptionOfNeeds { get; set; }
 
+    // Multi-valued attribute
+    public List<string> ContactNumbers { get; } = new();
+
     public Customer(
         string name,
-        Address address,
+        string phoneNumber,
         string driversLicense,
         string descriptionOfNeeds,
         string? email = null)
-        : base(name, address, email)
+        : base(name, phoneNumber, email)
     {
         DriversLicense = driversLicense;
         DescriptionOfNeeds = descriptionOfNeeds;

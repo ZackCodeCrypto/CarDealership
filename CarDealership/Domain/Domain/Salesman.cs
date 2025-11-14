@@ -21,12 +21,12 @@ public class Salesman : Employee
 
     public Salesman(
         string name,
-        Address address,
+        string phoneNumber,
         DateTime startDate,
         decimal salary,
         decimal? commissionRate = null,
         string? email = null)
-        : base(name, address, startDate, salary, email)
+        : base(name, phoneNumber, startDate, salary, email)
     {
         CommissionRate = commissionRate ?? DefaultCommissionRate;
         _extent.Add(this);

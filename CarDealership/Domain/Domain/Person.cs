@@ -2,11 +2,11 @@
 
 public abstract class Person
 {
-    // Basic attribute
+    // Basic Attribute
     private string _name;
-
+    private string _phoneNumber;
     // Optional attribute
-    private string? _email;
+    private string? _email;  
 
     public string Name
     {
@@ -16,6 +16,21 @@ public abstract class Person
             : value;
     }
 
+    public string PhoneNumber
+    {
+        get => _phoneNumber;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Phone number cannot be empty.", nameof(value));
+            
+            if (value.Length < 9)
+                throw new ArgumentException("Phone number appears too short.", nameof(value));
+
+            _phoneNumber = value;
+        }
+    }
+
     public string? Email
     {
         get => _email;
@@ -23,18 +38,14 @@ public abstract class Person
         {
             if (value != null && string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Email cannot be empty if provided.", nameof(value));
-
             _email = value;
         }
     }
 
-    // Complex attribute
-    public Address Address { get; private set; }
-
-    protected Person(string name, Address address, string? email = null)
+    protected Person(string name, string phoneNumber, string? email = null)
     {
         Name = name;
-        Address = address ?? throw new ArgumentNullException(nameof(address));
+        PhoneNumber = phoneNumber;
         Email = email;
     }
 }

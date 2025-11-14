@@ -38,11 +38,11 @@ public abstract class Employee : Person
 
     protected Employee(
         string name,
-        Address address,
+        string phoneNumber,
         DateTime startDate,
         decimal salary,
         string? email = null)
-        : base(name, address, email)
+        : base(name, phoneNumber, email)
     {
         StartDate = startDate;
         Salary = salary;

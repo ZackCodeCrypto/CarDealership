@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Enums;
+
+namespace CarDealership.Domain;
 
 public abstract class Car
 {
@@ -7,24 +9,25 @@ public abstract class Car
     private int _year;
     private decimal _price;
 
+    public string VIN { get; } = Guid.NewGuid().ToString();
     public string Model
     {
         get => _model;
-        set => _model = string.IsNullOrWhiteSpace(value)
+        private set => _model = string.IsNullOrWhiteSpace(value)
             ? throw new ArgumentException("Model cannot be empty.", nameof(value))
             : value;
     }
     public string Make
     {
         get => _make;
-        set => _make = string.IsNullOrWhiteSpace(value)
+        private set => _make = string.IsNullOrWhiteSpace(value)
             ? throw new ArgumentException("Make cannot be empty.", nameof(value))
             : value;
     }
     public int Year
     {
         get => _year;
-        set
+        private set
         {
             var currentYear = DateTime.Today.Year;
             if (value < 1980 || value > currentYear)

@@ -1,4 +1,5 @@
-﻿using CarDealership.Repositories;
+﻿using CarDealership.Enums;
+using CarDealership.Repositories;
 
 namespace CarDealership.Domain;
 

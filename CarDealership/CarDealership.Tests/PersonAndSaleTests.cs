@@ -1,4 +1,5 @@
 ﻿using CarDealership.Domain;
+using CarDealership.Enums;
 
 namespace CarDealership.Tests;
 

@@ -2,7 +2,7 @@
 
 namespace CarDealership.Domain;
 
-public class Hybrid : Car
+public class HybridCar : Car
 {
     private string _type;
 
@@ -17,9 +17,9 @@ public class Hybrid : Car
         }
     }
 
-    public static ExtentRepository<Hybrid> Extent = new();
+    public static ExtentRepository<HybridCar> Extent = new();
 
-    public Hybrid(string model, string make, int year, decimal price, UsageType usageType,
+    public HybridCar(string model, string make, int year, decimal price, UsageType usageType,
         string type)
         : base(model, make, year, price, usageType)
     {

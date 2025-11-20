@@ -1,6 +1,6 @@
 ﻿namespace CarDealership.Domain;
 
-public class Car
+public abstract class Car
 {
     private string _model;
     private string _make;

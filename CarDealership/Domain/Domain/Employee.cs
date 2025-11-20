@@ -1,6 +1,4 @@
-﻿using CarDealership.Repositories;
-
-namespace CarDealership.Domain;
+﻿namespace CarDealership.Domain;
 
 public abstract class Employee : Person
 {

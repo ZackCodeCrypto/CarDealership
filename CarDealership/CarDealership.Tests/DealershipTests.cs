@@ -18,8 +18,8 @@ public class DealershipTests
     {
         var d = new Dealership("Koons", "Tyson's Corner");
 
-        var car1 = new Car("A", "B", 2020, 10000m, UsageType.NewCar);
-        var car2 = new Car("C", "D", 2020, 10000m, UsageType.NewCar);
+        var car1 = new PetrolCar("A", "B", 2020, 10000m, UsageType.NewCar, 60, 140);
+        var car2 = new PetrolCar("C", "D", 2020, 10000m, UsageType.NewCar, 60, 140);
         car2.MarkSold();
 
         d.AddCar(car1);

@@ -2,7 +2,7 @@
 
 namespace CarDealership.Domain;
 
-public class Electric : Car
+public class ElectricCar : Car
 {
     private double _batterySize;
     private int _motorPower;
@@ -28,9 +28,9 @@ public class Electric : Car
         }
     }
 
-    public static ExtentRepository<Electric> Extent = new();
+    public static ExtentRepository<ElectricCar> Extent = new();
 
-    public Electric(string model, string make, int year, decimal price, UsageType usageType,
+    public ElectricCar(string model, string make, int year, decimal price, UsageType usageType,
         double batterySize, int motorPower)
         : base(model, make, year, price, usageType)
     {

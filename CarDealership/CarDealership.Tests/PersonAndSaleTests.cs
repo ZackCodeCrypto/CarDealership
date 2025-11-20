@@ -5,7 +5,6 @@ namespace CarDealership.Tests;
 [TestFixture]
 public class PersonAndSaleTests
 {
-
     [Test]
     public void OptionalEmail_AllowsNullButNotEmpty()
     {
@@ -33,7 +32,7 @@ public class PersonAndSaleTests
     {
         var customer = new Customer("Bob Ross", "5716785345", "DL1", "Needs car");
         var salesman = new Salesman("Nick Rochefort", "703457456", DateTime.Today.AddYears(-1), 40000m);
-        var car = new Car("Model", "Make", 2020, 20000m, UsageType.NewCar);
+        var car = new PetrolCar("Model", "Make", 2020, 20000m, UsageType.NewCar, 60, 140);
         var accessory = new Accessory("GPS", "Electronics", 500m);
         var insurance = new InsurancePolicy("P1", "Provider", "Full", 800m);
 

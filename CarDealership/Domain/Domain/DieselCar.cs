@@ -2,7 +2,7 @@
 
 namespace CarDealership.Domain;
 
-public class Petrol : Car
+public class DieselCar : Car
 {
     private double _tankSize;
     private int _enginePower;
@@ -28,9 +28,9 @@ public class Petrol : Car
         }
     }
 
-    public static ExtentRepository<Petrol> Extent = new();
+    public static ExtentRepository<DieselCar> Extent = new();
 
-    public Petrol(string model, string make, int year, decimal price, UsageType usageType,
+    public DieselCar(string model, string make, int year, decimal price, UsageType usageType,
         double tankSize, int enginePower)
         : base(model, make, year, price, usageType)
     {

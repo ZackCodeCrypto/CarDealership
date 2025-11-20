@@ -8,28 +8,28 @@ public class CarTests
     [SetUp]
     public void SetUp()
     {
-        Car.Extent.SaveExtent();
-        Car.Extent.LoadExtent();
+        PetrolCar.Extent.SaveExtent();
+        PetrolCar.Extent.LoadExtent();
     }
 
     [TearDown]
     public void TearDown()
     {
-        Car.Extent.DeleteExtent();
+        PetrolCar.Extent.DeleteExtent();
     }
 
     [Test]
     public void Constructor_WithEmptyModel_Throws()
     {
         Assert.That(
-            () => new Car("", "Toyota", 2020, 20000m, UsageType.NewCar),
+            () => new PetrolCar("", "Toyota", 2020, 20000m, UsageType.NewCar, 60, 140),
             Throws.ArgumentException);
     }
 
     [Test]
     public void Price_Negative_Throws()
     {
-        var car = new Car("Corolla", "Toyota", 2020, 20000m, UsageType.NewCar);
+        var car = new PetrolCar("Corolla", "Toyota", 2020, 20000m, UsageType.NewCar, 60, 140);
 
         Assert.That(
             () => car.Price = -1m,
@@ -42,14 +42,14 @@ public class CarTests
         var futureYear = DateTime.Today.Year + 1;
 
         Assert.That(
-            () => new Car("Corolla", "Toyota", futureYear, 20000m, UsageType.NewCar),
+            () => new PetrolCar("Corolla", "Toyota", futureYear, 20000m, UsageType.NewCar, 60, 140),
             Throws.TypeOf<ArgumentOutOfRangeException>());
     }
 
     [Test]
     public void Mileage_SumsServiceRecords()
     {
-        var car = new Car("Corolla", "Toyota", 2020, 20000m, UsageType.NewCar);
+        var car = new PetrolCar("Corolla", "Toyota", 2020, 20000m, UsageType.NewCar, 60, 140);
         car.AddServiceRecord(new ServiceRecord(DateTime.Today.AddDays(-10), "Test 1", "Check", 100));
         car.AddServiceRecord(new ServiceRecord(DateTime.Today.AddDays(-5), "Test 2", "Check", 50));
 
@@ -59,14 +59,14 @@ public class CarTests
     [Test]
     public void Extent_SaveAndLoad_KeepsCount()
     {
-        var car = new Car("A", "B", 2020, 10000m, UsageType.NewCar);
+        var car = new PetrolCar("A", "B", 2020, 10000m, UsageType.NewCar, 60, 140);
 
-        Car.Extent.SaveExtent();
+        PetrolCar.Extent.SaveExtent();
 
-        var originalCount = Car.Extent.Collection.Count;
+        var originalCount = PetrolCar.Extent.Collection.Count;
 
-        Car.Extent.LoadExtent();
+        PetrolCar.Extent.LoadExtent();
 
-        Assert.That(Car.Extent.Collection.Count, Is.EqualTo(originalCount));
+        Assert.That(PetrolCar.Extent.Collection.Count, Is.EqualTo(originalCount));
     }
 }

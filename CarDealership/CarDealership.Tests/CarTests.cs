@@ -8,11 +8,14 @@ public class CarTests
     [SetUp]
     public void SetUp()
     {
-        
-        var tempFile = Path.GetTempFileName();
-        Car.SaveExtent(tempFile);
-        Car.LoadExtent(tempFile);
-        File.Delete(tempFile);
+        Car.SaveExtent();
+        Car.LoadExtent();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Car.DeleteExtent();
     }
 
     [Test]
@@ -56,18 +59,14 @@ public class CarTests
     [Test]
     public void Extent_SaveAndLoad_KeepsCount()
     {
-        var path = Path.GetTempFileName();
+        var car = new Car("A", "B", 2020, 10000m, UsageType.NewCar);
 
-        var car1 = new Car("A", "B", 2020, 10000m, UsageType.NewCar);
-
-        Car.SaveExtent(path);
+        Car.SaveExtent();
 
         var originalCount = Car.Extent.Count;
 
-        Car.LoadExtent(path);
+        Car.LoadExtent();
 
         Assert.That(Car.Extent.Count, Is.EqualTo(originalCount));
-
-        File.Delete(path);
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace CarDealership.Domain;
 
-using System.Text.Json;
+using CarDealership.Repositories;
+
 
 public class Car
 {
@@ -16,7 +17,6 @@ public class Car
             ? throw new ArgumentException("Model cannot be empty.", nameof(value))
             : value;
     }
-
     public string Make
     {
         get => _make;
@@ -24,7 +24,6 @@ public class Car
             ? throw new ArgumentException("Make cannot be empty.", nameof(value))
             : value;
     }
-
     public int Year
     {
         get => _year;
@@ -36,7 +35,6 @@ public class Car
             _year = value;
         }
     }
-
     public decimal Price
     {
         get => _price;
@@ -47,16 +45,8 @@ public class Car
 
     public UsageType UsageType { get; set; }
     public CarStatus Status { get; private set; } = CarStatus.Available;
-
-    // Multi-value: list of service records
     public IList<ServiceRecord> ServiceRecords { get; } = new List<ServiceRecord>();
-
-    // Derived attribute: /mileage
     public double Mileage => ServiceRecords.Sum(sr => sr.MilesDriven);
-
-    // Extent class
-    private static readonly List<Car> _extent = new();
-    public static IReadOnlyList<Car> Extent => _extent.AsReadOnly();
 
     public Car(string model, string make, int year, decimal price, UsageType usageType)
     {
@@ -66,7 +56,7 @@ public class Car
         Price = price;
         UsageType = usageType;
 
-        _extent.Add(this);
+        _repository.Add(this);
     }
 
     public void AddServiceRecord(ServiceRecord record)
@@ -76,23 +66,11 @@ public class Car
 
     public void MarkSold() => Status = CarStatus.Sold;
 
-    // Extent persistence
-    public static void SaveExtent(string filePath)
-    {
-        var json = JsonSerializer.Serialize(_extent);
-        File.WriteAllText(filePath, json);
-    }
-
-    public static void LoadExtent(string filePath)
-    {
-        if (!File.Exists(filePath)) return;
-
-        var json = File.ReadAllText(filePath);
-        var loaded = JsonSerializer.Deserialize<List<Car>>(json);
-
-        if (loaded == null) return;
-
-        _extent.Clear();
-        _extent.AddRange(loaded);
-    }
+    #region Extent
+    private static ExtentRepository<Car> _repository = new("extents/Car.json");
+    public static IReadOnlyList<Car> Extent => _repository.Extent;
+    public static void SaveExtent() => _repository.SaveExtent();
+    public static void LoadExtent() => _repository.LoadExtent();
+    public static void DeleteExtent() => _repository.DeleteExtent();
+    #endregion
 }

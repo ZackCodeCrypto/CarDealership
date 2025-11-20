@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class InsurancePolicy
 {
@@ -6,6 +8,8 @@ public class InsurancePolicy
     public string Provider { get; }
     public string CoverageDetails { get; }
     public decimal Price { get; }
+
+    public static ExtentRepository<InsurancePolicy> Extent = new();
 
     public InsurancePolicy(string policyNumber, string provider, string coverageDetails, decimal price)
     {
@@ -22,5 +26,7 @@ public class InsurancePolicy
         Provider = provider;
         CoverageDetails = coverageDetails;
         Price = price;
+
+        Extent.Add(this);
     }
 }

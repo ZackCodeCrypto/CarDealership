@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public abstract class Employee : Person
 {
@@ -16,7 +18,6 @@ public abstract class Employee : Person
             _startDate = value;
         }
     }
-
     public DateTime? EndDate
     {
         get => _endDate;
@@ -27,7 +28,6 @@ public abstract class Employee : Person
             _endDate = value;
         }
     }
-
     public decimal Salary
     {
         get => _salary;

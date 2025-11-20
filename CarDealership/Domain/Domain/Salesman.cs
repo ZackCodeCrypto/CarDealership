@@ -1,10 +1,9 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Salesman : Employee
 {
-    // Class/static attribute for our default commission rate
-    public static decimal DefaultCommissionRate { get; set; } = 0.05m;
-
     private decimal _commissionRate;
 
     public decimal CommissionRate
@@ -15,9 +14,10 @@ public class Salesman : Employee
             : value;
     }
 
-    // Extent (collection of all Salesmen)
-    private static readonly List<Salesman> _extent = new();
-    public static IReadOnlyList<Salesman> Extent => _extent.AsReadOnly();
+    // Class/static attribute for our default commission rate
+    public static decimal DefaultCommissionRate { get; set; } = 0.05m;
+
+    public static ExtentRepository<Salesman> Extent = new();
 
     public Salesman(
         string name,
@@ -29,6 +29,7 @@ public class Salesman : Employee
         : base(name, phoneNumber, startDate, salary, email)
     {
         CommissionRate = commissionRate ?? DefaultCommissionRate;
-        _extent.Add(this);
+
+        Extent.Add(this);
     }
 }

@@ -1,15 +1,13 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class TestDrive
 {
-    private static readonly List<TestDrive> _extent = new();
-    public static IReadOnlyList<TestDrive> Extent => _extent.AsReadOnly();
-
     private int _duration;
     private int _distance;
     private const int MaxDistance = 20;
 
-    public DateTime Date { get; }
     public int Duration
     {
         get => _duration;
@@ -20,7 +18,6 @@ public class TestDrive
             _duration = value;
         }
     }
-
     public int Distance
     {
         get => _distance;
@@ -34,8 +31,11 @@ public class TestDrive
         }
     }
 
+    public DateTime Date { get; }
     public Customer Customer { get; }
     public Car Car { get; }
+
+    public static ExtentRepository<TestDrive> Extent = new();
 
     public TestDrive(DateTime date, int duration, int distance, Customer customer, Car car)
     {
@@ -48,6 +48,6 @@ public class TestDrive
         Customer = customer ?? throw new ArgumentNullException(nameof(customer));
         Car = car ?? throw new ArgumentNullException(nameof(car));
 
-        _extent.Add(this);
+        Extent.Add(this);
     }
 }

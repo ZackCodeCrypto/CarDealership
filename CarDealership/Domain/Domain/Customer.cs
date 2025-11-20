@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Customer : Person
 {
@@ -13,9 +15,10 @@ public class Customer : Person
     }
 
     public string DescriptionOfNeeds { get; set; }
-
     // Multi-valued attribute
     public List<string> ContactNumbers { get; } = new();
+
+    public static ExtentRepository<Customer> Extent = new();
 
     public Customer(
         string name,
@@ -35,5 +38,7 @@ public class Customer : Person
             throw new ArgumentException("Contact number cannot be empty.", nameof(number));
 
         ContactNumbers.Add(number);
+
+        Extent.Add(this);
     }
 }

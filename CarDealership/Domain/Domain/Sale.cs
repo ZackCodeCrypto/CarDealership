@@ -1,26 +1,14 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 
 public class Sale
 {
     private DateTime _saleDate;
-
-    public DateTime SaleDate
-    {
-        get => _saleDate;
-        set
-        {
-            if (value > DateTime.Today)
-                throw new ArgumentOutOfRangeException(nameof(value), "Sale date cannot be in the future.");
-            _saleDate = value;
-        }
-    }
-
     public string MethodOfPayment { get; set; }
-
     public Customer Customer { get; }
     public Salesman Salesman { get; }
-
     public Car? Car { get; }
     public IList<Accessory> Accessories { get; } = new List<Accessory>();
     public InsurancePolicy? InsurancePolicy { get; }
@@ -37,6 +25,18 @@ public class Sale
             return total;
         }
     }
+    public DateTime SaleDate
+    {
+        get => _saleDate;
+        set
+        {
+            if (value > DateTime.Today)
+                throw new ArgumentOutOfRangeException(nameof(value), "Sale date cannot be in the future.");
+            _saleDate = value;
+        }
+    }
+
+    public static ExtentRepository<Sale> Extent = new();
 
     public Sale(
         DateTime saleDate,

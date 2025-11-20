@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Electric : Car
 {
@@ -15,7 +17,6 @@ public class Electric : Car
             _batterySize = value;
         }
     }
-
     public int MotorPower
     {
         get => _motorPower;
@@ -27,11 +28,15 @@ public class Electric : Car
         }
     }
 
+    public static ExtentRepository<Electric> Extent = new();
+
     public Electric(string model, string make, int year, decimal price, UsageType usageType,
         double batterySize, int motorPower)
         : base(model, make, year, price, usageType)
     {
         BatterySize = batterySize;
         MotorPower = motorPower;
+
+        Extent.Add(this);
     }
 }

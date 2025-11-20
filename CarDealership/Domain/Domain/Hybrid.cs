@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Hybrid : Car
 {
@@ -15,10 +17,14 @@ public class Hybrid : Car
         }
     }
 
+    public static ExtentRepository<Hybrid> Extent = new();
+
     public Hybrid(string model, string make, int year, decimal price, UsageType usageType,
         string type)
         : base(model, make, year, price, usageType)
     {
         Type = type;
+
+        Extent.Add(this);
     }
 }

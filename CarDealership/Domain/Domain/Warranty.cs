@@ -1,14 +1,11 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Warranty
 {
-    private static readonly List<Warranty> _extent = new();
-    public static IReadOnlyList<Warranty> Extent => _extent.AsReadOnly();
-
     private string _terms;
 
-    public DateTime StartDate { get; }
-    public DateTime EndDate { get; }
     public string Terms
     {
         get => _terms;
@@ -20,8 +17,12 @@ public class Warranty
         }
     }
 
+    public DateTime StartDate { get; }
+    public DateTime EndDate { get; }
     // Derived attribute
     public bool IsActive => DateTime.Today >= StartDate && DateTime.Today <= EndDate;
+
+    public static ExtentRepository<Warranty> Extent = new();
 
     public Warranty(DateTime startDate, DateTime endDate, string terms)
     {
@@ -35,6 +36,6 @@ public class Warranty
         EndDate = endDate;
         Terms = terms;
 
-        _extent.Add(this);
+        Extent.Add(this);
     }
 }

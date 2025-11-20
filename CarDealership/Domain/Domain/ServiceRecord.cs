@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class ServiceRecord
 {
@@ -6,6 +8,8 @@ public class ServiceRecord
     public string Description { get; }
     public string ServiceType { get; }
     public double MilesDriven { get; }
+
+    public static ExtentRepository<ServiceRecord> Extent = new();
 
     public ServiceRecord(DateTime serviceDate, string description, string serviceType, double milesDriven)
     {
@@ -25,5 +29,7 @@ public class ServiceRecord
         Description = description;
         ServiceType = serviceType;
         MilesDriven = milesDriven;
+
+        Extent.Add(this);
     }
 }

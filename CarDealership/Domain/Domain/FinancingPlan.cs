@@ -1,10 +1,9 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class FinancingPlan
 {
-    private static readonly List<FinancingPlan> _extent = new();
-    public static IReadOnlyList<FinancingPlan> Extent => _extent.AsReadOnly();
-
     private decimal _monthlyPayment;
     private double _interestRate;
 
@@ -30,11 +29,13 @@ public class FinancingPlan
         }
     }
 
+    public static ExtentRepository<FinancingPlan> Extent = new();
+
     public FinancingPlan(decimal monthlyPayment, double interestRate)
     {
         MonthlyPayment = monthlyPayment;
         InterestRate = interestRate;
 
-        _extent.Add(this);
+        Extent.Add(this);
     }
 }

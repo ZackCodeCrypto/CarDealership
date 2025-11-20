@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Accessory
 {
@@ -12,9 +14,6 @@ public class Accessory
             ? throw new ArgumentException("Name cannot be empty.", nameof(value))
             : value;
     }
-
-    public string AccessoryType { get; set; }
-
     public decimal Price
     {
         get => _price;
@@ -23,10 +22,16 @@ public class Accessory
             : value;
     }
 
+    public string AccessoryType { get; set; }
+
+    public static ExtentRepository<Accessory> Extent = new();
+
     public Accessory(string name, string accessoryType, decimal price)
     {
         Name = name;
         AccessoryType = accessoryType;
         Price = price;
+
+        Extent.Add(this);
     }
 }

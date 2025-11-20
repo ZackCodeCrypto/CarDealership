@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public abstract class Person
 {
@@ -15,7 +17,6 @@ public abstract class Person
             ? throw new ArgumentException("Name cannot be empty.", nameof(value))
             : value;
     }
-
     public string PhoneNumber
     {
         get => _phoneNumber;
@@ -30,7 +31,6 @@ public abstract class Person
             _phoneNumber = value;
         }
     }
-
     public string? Email
     {
         get => _email;

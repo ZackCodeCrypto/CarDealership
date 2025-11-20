@@ -8,14 +8,14 @@ public class CarTests
     [SetUp]
     public void SetUp()
     {
-        Car.SaveExtent();
-        Car.LoadExtent();
+        Car.Extent.SaveExtent();
+        Car.Extent.LoadExtent();
     }
 
     [TearDown]
     public void TearDown()
     {
-        Car.DeleteExtent();
+        Car.Extent.DeleteExtent();
     }
 
     [Test]
@@ -61,12 +61,12 @@ public class CarTests
     {
         var car = new Car("A", "B", 2020, 10000m, UsageType.NewCar);
 
-        Car.SaveExtent();
+        Car.Extent.SaveExtent();
 
-        var originalCount = Car.Extent.Count;
+        var originalCount = Car.Extent.Collection.Count;
 
-        Car.LoadExtent();
+        Car.Extent.LoadExtent();
 
-        Assert.That(Car.Extent.Count, Is.EqualTo(originalCount));
+        Assert.That(Car.Extent.Collection.Count, Is.EqualTo(originalCount));
     }
 }

@@ -1,8 +1,5 @@
 ﻿namespace CarDealership.Domain;
 
-using CarDealership.Repositories;
-
-
 public class Car
 {
     private string _model;
@@ -55,8 +52,6 @@ public class Car
         Year = year;
         Price = price;
         UsageType = usageType;
-
-        _repository.Add(this);
     }
 
     public void AddServiceRecord(ServiceRecord record)
@@ -65,12 +60,4 @@ public class Car
     }
 
     public void MarkSold() => Status = CarStatus.Sold;
-
-    #region Extent
-    private static ExtentRepository<Car> _repository = new("extents/Car.json");
-    public static IReadOnlyList<Car> Extent => _repository.Extent;
-    public static void SaveExtent() => _repository.SaveExtent();
-    public static void LoadExtent() => _repository.LoadExtent();
-    public static void DeleteExtent() => _repository.DeleteExtent();
-    #endregion
 }

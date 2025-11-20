@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Dealership
 {
@@ -12,7 +14,6 @@ public class Dealership
             ? throw new ArgumentException("Name cannot be empty.", nameof(value))
             : value;
     }
-
     public string Location
     {
         get => _location;
@@ -27,10 +28,14 @@ public class Dealership
     // Derived attribute: /carsAvailable
     public int CarsAvailable => Cars.Count(c => c.Status == CarStatus.Available);
 
+    public static ExtentRepository<Dealership> Extent = new();
+
     public Dealership(string name, string location)
     {
         Name = name;
         Location = location;
+
+        Extent.Add(this);
     }
 
     public void AddCar(Car car)

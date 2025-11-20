@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Diesel : Car
 {
@@ -15,7 +17,6 @@ public class Diesel : Car
             _tankSize = value;
         }
     }
-
     public int EnginePower
     {
         get => _enginePower;
@@ -27,11 +28,15 @@ public class Diesel : Car
         }
     }
 
+    public static ExtentRepository<Diesel> Extent = new();
+
     public Diesel(string model, string make, int year, decimal price, UsageType usageType,
         double tankSize, int enginePower)
         : base(model, make, year, price, usageType)
     {
         TankSize = tankSize;
         EnginePower = enginePower;
+
+        Extent.Add(this);
     }
 }

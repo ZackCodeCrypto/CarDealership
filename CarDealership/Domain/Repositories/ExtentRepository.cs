@@ -2,7 +2,7 @@
 
 namespace CarDealership.Repositories
 {
-    internal class ExtentRepository<T> where T : class
+    public class ExtentRepository<T> where T : class
     {
         private List<T> _extent = [];
         private string _filePath;
@@ -10,14 +10,25 @@ namespace CarDealership.Repositories
         public ExtentRepository(string filePath)
         {
             _filePath = filePath;
+            EnsureDirectoryExists();
         }
 
         public ExtentRepository()
         {
-            _filePath = $"extents\\{typeof(T).Name}.json";
+            _filePath = Path.Combine("extents", $"{typeof(T).Name}.json");
+            EnsureDirectoryExists();
         }
 
-        public IReadOnlyList<T> Extent => _extent.AsReadOnly();
+        private void EnsureDirectoryExists()
+        {
+            var dir = Path.GetDirectoryName(_filePath);
+            if (!string.IsNullOrEmpty(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
+
+        public IReadOnlyList<T> Collection => _extent.AsReadOnly();
 
         public void Add(T item)
         {

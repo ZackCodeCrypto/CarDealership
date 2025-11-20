@@ -1,4 +1,6 @@
-﻿namespace CarDealership.Domain;
+﻿using CarDealership.Repositories;
+
+namespace CarDealership.Domain;
 
 public class Mechanic : Employee
 {
@@ -15,6 +17,8 @@ public class Mechanic : Employee
         }
     }
 
+    public static ExtentRepository<Mechanic> Extent = new();
+
     public Mechanic(
         string name,
         string phoneNumber,
@@ -25,5 +29,7 @@ public class Mechanic : Employee
         : base(name, phoneNumber, startDate, salary, email)
     {
         Certification = certification;
+
+        Extent.Add(this);
     }
 }

@@ -56,7 +56,7 @@ public abstract class Employee : Person
 
     public void AddContactNumber(string contactNumber)
     {
-        if (PhoneNumberCheck(contactNumber))
+        if (IsPhoneNumberCorrect(contactNumber))
         {
             _contactNumbers.Add(contactNumber);
         }

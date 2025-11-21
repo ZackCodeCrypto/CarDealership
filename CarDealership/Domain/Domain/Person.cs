@@ -23,7 +23,7 @@ public abstract class Person
         get => _phoneNumber;
         set
         {
-            if (PhoneNumberCheck(value))
+            if (IsPhoneNumberCorrect(value))
                 _phoneNumber = value;
         }
     }
@@ -45,7 +45,7 @@ public abstract class Person
         Email = email;
     }
 
-    protected static bool PhoneNumberCheck(string phoneNumber)
+    protected static bool IsPhoneNumberCorrect(string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(phoneNumber))
             throw new ArgumentException("Phone number cannot be empty.", nameof(phoneNumber));

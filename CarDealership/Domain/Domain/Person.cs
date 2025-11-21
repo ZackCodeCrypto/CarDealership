@@ -1,12 +1,15 @@
-﻿namespace CarDealership.Domain;
+﻿using System.Text.RegularExpressions;
+
+namespace CarDealership.Domain;
 
 public abstract class Person
 {
     // Basic Attribute
     private string _name;
-    private string _phoneNumber;
+    protected string _phoneNumber;
     // Optional attribute
     private string? _email;  
+    private static Regex _phoneRegex = new(@"^\d{9}$");
 
     public string Name
     {
@@ -20,13 +23,8 @@ public abstract class Person
         get => _phoneNumber;
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Phone number cannot be empty.", nameof(value));
-            
-            if (value.Length < 9)
-                throw new ArgumentException("Phone number appears too short.", nameof(value));
-
-            _phoneNumber = value;
+            if (PhoneNumberCheck(value))
+                _phoneNumber = value;
         }
     }
     public string? Email
@@ -45,5 +43,16 @@ public abstract class Person
         Name = name;
         PhoneNumber = phoneNumber;
         Email = email;
+    }
+
+    protected static bool PhoneNumberCheck(string phoneNumber)
+    {
+        if (string.IsNullOrWhiteSpace(phoneNumber))
+            throw new ArgumentException("Phone number cannot be empty.", nameof(phoneNumber));
+
+        if (!_phoneRegex.IsMatch(phoneNumber))
+            throw new ArgumentException("Phone number must be a 9-digit string", nameof(phoneNumber));
+
+        return true;
     }
 }

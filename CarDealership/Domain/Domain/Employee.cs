@@ -5,6 +5,7 @@ public abstract class Employee : Person
     private DateTime _startDate;
     private DateTime? _endDate;
     private decimal _salary;
+    private List<string> _contactNumbers;
 
     public DateTime StartDate
     {
@@ -34,6 +35,11 @@ public abstract class Employee : Person
             : value;
     }
 
+    public IReadOnlyList<string> ContactNumbers
+    {
+        get => _contactNumbers.AsReadOnly();
+    }
+
     protected Employee(
         string name,
         string phoneNumber,
@@ -44,5 +50,24 @@ public abstract class Employee : Person
     {
         StartDate = startDate;
         Salary = salary;
+
+        _contactNumbers = [phoneNumber];
+    }
+
+    public void AddContactNumber(string contactNumber)
+    {
+        if (PhoneNumberCheck(contactNumber))
+        {
+            _contactNumbers.Add(contactNumber);
+        }
+    }
+
+    public void RemoveContactNumber(string contactNumber)
+    {
+        if (_contactNumbers.Count == 1 && _contactNumbers.Contains(contactNumber))
+        {
+            throw new InvalidOperationException("Cannot remove the last contact number.");
+        }
+        _contactNumbers.Remove(contactNumber);
     }
 }

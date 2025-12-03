@@ -38,9 +38,50 @@ public class Dealership
 
         Extent.Add(this);
     }
+    
+    // Qualified association structure
+    private readonly Dictionary<string, Car> _carsByVin = new();
 
-    public void AddCar(Car car)
+   // Lookup by VIN
+    public Car? GetCarByVin(string vin)
     {
-        Cars.Add(car ?? throw new ArgumentNullException(nameof(car)));
+        if (string.IsNullOrWhiteSpace(vin))
+            throw new ArgumentException("VIN cannot be empty.", nameof(vin));
+
+        return _carsByVin.TryGetValue(vin, out var car) ? car : null;
     }
+
+   // Add car using VIN as qualifier
+    public void AddCarByVin(Car car)
+    {
+        if (car == null)
+            throw new ArgumentNullException(nameof(car));
+
+        if (_carsByVin.ContainsKey(car.VIN))
+            throw new InvalidOperationException($"A car with VIN {car.VIN} is already stored in this dealership.");
+
+        _carsByVin[car.VIN] = car;
+
+        // Maintain compatibility with existing code
+        Cars.Add(car);
+
+        // assign the dealership back-reference
+        car.AssignToDealership(this);
+    }
+    
+    public void RemoveCarByVin(string vin)
+    {
+        if (string.IsNullOrWhiteSpace(vin))
+            throw new ArgumentException("VIN cannot be empty.", nameof(vin));
+
+        if (!_carsByVin.TryGetValue(vin, out var car))
+            throw new InvalidOperationException($"No car with VIN {vin} exists in this dealership.");
+
+        _carsByVin.Remove(vin);
+        Cars.Remove(car);
+        
+        car.AssignToDealership(null);
+    }
+
 }
+

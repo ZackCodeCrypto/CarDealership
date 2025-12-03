@@ -9,7 +9,8 @@ public abstract class Car
     private int _year;
     private decimal _price;
 
-    public string VIN { get; } = Guid.NewGuid().ToString();
+    public string VIN { get; internal set; } = Guid.NewGuid().ToString();
+
     public string Model
     {
         get => _model;
@@ -63,4 +64,26 @@ public abstract class Car
     }
 
     public void MarkSold() => Status = CarStatus.Sold;
+    
+    // Back-reference to dealership
+    public Dealership? Dealership { get; private set; }
+
+   // Internal method for association
+   internal void AssignToDealership(Dealership? dealership)
+   {
+       if (dealership == null)
+       {
+           Dealership = null;
+           return;
+       }
+
+       if (Dealership != null && Dealership != dealership)
+           throw new InvalidOperationException("This car is already assigned to a different dealership.");
+
+       Dealership = dealership;
+   }
+
+
 }
+
+

@@ -18,6 +18,7 @@ public class TestDrive
             _duration = value;
         }
     }
+
     public int Distance
     {
         get => _distance;
@@ -48,6 +49,14 @@ public class TestDrive
         Customer = customer ?? throw new ArgumentNullException(nameof(customer));
         Car = car ?? throw new ArgumentNullException(nameof(car));
 
+        // Connection with Customer
+        Customer.AddTestDrive(this);
+
         Extent.Add(this);
+    }
+    // Optional helper for removing the association in the future
+    public void Unlink()
+    {
+        Customer.RemoveTestDrive(this);
     }
 }

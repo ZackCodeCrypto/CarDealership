@@ -17,6 +17,10 @@ public class Customer : Person
     public string DescriptionOfNeeds { get; set; }
     // Multi-valued attribute
     public List<string> ContactNumbers { get; } = new();
+    
+    // Basic association Customer to TestDrives (0..*)
+    private readonly List<TestDrive> _testDrives = new();
+    public IReadOnlyCollection<TestDrive> TestDrives => _testDrives.AsReadOnly();
 
     public static ExtentRepository<Customer> Extent = new();
 
@@ -41,4 +45,22 @@ public class Customer : Person
 
         Extent.Add(this);
     }
+    
+    // Association managing
+    internal void AddTestDrive(TestDrive drive)
+    {
+        if (drive == null) throw new ArgumentNullException(nameof(drive));
+        if (!_testDrives.Contains(drive))
+        {
+            _testDrives.Add(drive);
+            Extent.Add(this);
+        }
+    }
+
+    internal void RemoveTestDrive(TestDrive drive)
+    {
+        if (drive == null) throw new ArgumentNullException(nameof(drive));
+        _testDrives.Remove(drive);
+    }
 }
+

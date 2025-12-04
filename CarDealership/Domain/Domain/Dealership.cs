@@ -61,11 +61,9 @@ public class Dealership
             throw new InvalidOperationException($"A car with VIN {car.VIN} is already stored in this dealership.");
 
         _carsByVin[car.VIN] = car;
-
-        // Maintain compatibility with existing code
+        
         Cars.Add(car);
-
-        // assign the dealership back-reference
+        
         car.AssignToDealership(this);
     }
     

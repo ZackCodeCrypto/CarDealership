@@ -23,10 +23,8 @@ public class Mechanic : Employee
         string name,
         string phoneNumber,
         string? email,
-        DateTime startDate,
-        decimal salary,
         string certification)
-        : base(name, phoneNumber, startDate, salary, email)
+        : base(name, phoneNumber, email)
     {
         Certification = certification;
 

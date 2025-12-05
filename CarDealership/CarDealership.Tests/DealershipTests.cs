@@ -76,7 +76,7 @@ public class DealershipTests
     {
         var d = new Dealership("Koons", "Tyson's Corner");
 
-        Assert.That(d.GetCarByVin("missing-vin"), Is.Null);
+        Assert.That(d.GetCarByVin(Guid.NewGuid()), Is.Null);
     }
 
     [Test]

@@ -39,6 +39,15 @@ namespace CarDealership.Repositories
             _extent.Add(item);
         }
 
+        public void Remove(T item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item), $"{typeof(T).Name} cannot be null");
+            }
+            _extent.Remove(item);
+        }
+
         public void SaveExtent()
         {
             var json = JsonSerializer.Serialize(_extent);

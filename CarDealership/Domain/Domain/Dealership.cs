@@ -7,6 +7,8 @@ public class Dealership
 {
     private string _name;
     private string _location;
+    private HashSet<Car> _cars = [];
+    private HashSet<Employment> _employments = [];
 
     public string Name
     {
@@ -24,7 +26,10 @@ public class Dealership
     }
 
     // Multi-value association
-    public IList<Car> Cars { get; } = new List<Car>();
+    public IReadOnlyCollection<Car> Cars => _cars.ToList().AsReadOnly();
+
+    // Association class
+    public IReadOnlyCollection<Employment> Employments => _employments.ToList().AsReadOnly();
 
     // Derived attribute: /carsAvailable
     public int CarsAvailable => Cars.Count(c => c.Status == CarStatus.Available);
@@ -40,46 +45,57 @@ public class Dealership
     }
     
     // Qualified association structure
-    private readonly Dictionary<string, Car> _carsByVin = new();
+    private readonly Dictionary<Guid, Car> _carsByVin = new();
 
-   // Lookup by VIN
-    public Car? GetCarByVin(string vin)
+    // Lookup by VIN
+    public Car? GetCarByVin(Guid vin)
     {
-        if (string.IsNullOrWhiteSpace(vin))
-            throw new ArgumentException("VIN cannot be empty.", nameof(vin));
-
         return _carsByVin.TryGetValue(vin, out var car) ? car : null;
     }
 
-   // Add car using VIN as qualifier
+    // Add car using VIN as qualifier
     public void AddCarByVin(Car car)
     {
-        if (car == null)
-            throw new ArgumentNullException(nameof(car));
+        ArgumentNullException.ThrowIfNull(car);
 
         if (_carsByVin.ContainsKey(car.VIN))
             throw new InvalidOperationException($"A car with VIN {car.VIN} is already stored in this dealership.");
 
         _carsByVin[car.VIN] = car;
         
-        Cars.Add(car);
+        _cars.Add(car);
         
         car.AssignToDealership(this);
     }
     
-    public void RemoveCarByVin(string vin)
+    public void RemoveCarByVin(Guid vin)
     {
-        if (string.IsNullOrWhiteSpace(vin))
-            throw new ArgumentException("VIN cannot be empty.", nameof(vin));
-
         if (!_carsByVin.TryGetValue(vin, out var car))
             throw new InvalidOperationException($"No car with VIN {vin} exists in this dealership.");
 
         _carsByVin.Remove(vin);
-        Cars.Remove(car);
+        _cars.Remove(car);
         
         car.AssignToDealership(null);
     }
 
+    internal void AddEmployment(Employment employment)
+    {
+        ArgumentNullException.ThrowIfNull(employment);
+
+        var existingEmployment = _employments.FirstOrDefault(e => e.Employee == employment.Employee && e.IsActive);
+        if (existingEmployment != null)
+        {
+            existingEmployment.EndDate = DateTime.Now;
+        }
+
+        _employments.Add(employment);
+    }
+
+    internal void RemoveEmployment(Employment employment)
+    {
+        ArgumentNullException.ThrowIfNull(employment);
+        _employments.Remove(employment);
+    }
 }
 

@@ -23,10 +23,8 @@ public class Manager : Employee
         string name,
         string phoneNumber,
         string? email,
-        DateTime startDate,
-        decimal salary,
         string department)
-        : base(name, phoneNumber, startDate, salary, email)
+        : base(name, phoneNumber, email)
     {
         Department = department;
 

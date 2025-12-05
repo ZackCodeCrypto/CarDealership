@@ -5,6 +5,7 @@ namespace CarDealership.Domain;
 public class Customer : Person
 {
     private string _driversLicense;
+    private HashSet<string> _contactNumbers = [];
 
     public string DriversLicense
     {
@@ -16,8 +17,8 @@ public class Customer : Person
 
     public string DescriptionOfNeeds { get; set; }
     // Multi-valued attribute
-    public List<string> ContactNumbers { get; } = new();
-    
+    public IReadOnlyCollection<string> ContactNumbers => _contactNumbers.ToList().AsReadOnly();
+
     // Basic association Customer to TestDrives (0..*)
     private readonly List<TestDrive> _testDrives = new();
     public IReadOnlyCollection<TestDrive> TestDrives => _testDrives.AsReadOnly();
@@ -34,6 +35,8 @@ public class Customer : Person
     {
         DriversLicense = driversLicense;
         DescriptionOfNeeds = descriptionOfNeeds;
+
+        Extent.Add(this);
     }
 
     public void AddContactNumber(string number)
@@ -41,25 +44,24 @@ public class Customer : Person
         if (string.IsNullOrWhiteSpace(number))
             throw new ArgumentException("Contact number cannot be empty.", nameof(number));
 
-        ContactNumbers.Add(number);
-
-        Extent.Add(this);
+        _contactNumbers.Add(number);
     }
     
     // Association managing
     internal void AddTestDrive(TestDrive drive)
     {
-        if (drive == null) throw new ArgumentNullException(nameof(drive));
+        ArgumentNullException.ThrowIfNull(drive);
+
         if (!_testDrives.Contains(drive))
         {
             _testDrives.Add(drive);
-            Extent.Add(this);
         }
     }
 
     internal void RemoveTestDrive(TestDrive drive)
     {
-        if (drive == null) throw new ArgumentNullException(nameof(drive));
+        ArgumentNullException.ThrowIfNull(drive);
+
         _testDrives.Remove(drive);
     }
 }

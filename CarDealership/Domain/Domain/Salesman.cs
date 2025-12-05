@@ -22,11 +22,9 @@ public class Salesman : Employee
     public Salesman(
         string name,
         string phoneNumber,
-        DateTime startDate,
-        decimal salary,
         decimal? commissionRate = null,
         string? email = null)
-        : base(name, phoneNumber, startDate, salary, email)
+        : base(name, phoneNumber, email)
     {
         CommissionRate = commissionRate ?? DefaultCommissionRate;
 

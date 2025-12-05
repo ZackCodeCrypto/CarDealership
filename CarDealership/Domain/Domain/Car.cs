@@ -8,8 +8,9 @@ public abstract class Car
     private string _make;
     private int _year;
     private decimal _price;
+    private HashSet<ServiceRecord> _serviceRecords = [];
 
-    public string VIN { get; internal set; } = Guid.NewGuid().ToString();
+    public Guid VIN { get; internal set; } = Guid.NewGuid();
 
     public string Model
     {
@@ -46,7 +47,7 @@ public abstract class Car
 
     public UsageType UsageType { get; set; }
     public CarStatus Status { get; private set; } = CarStatus.Available;
-    public IList<ServiceRecord> ServiceRecords { get; } = new List<ServiceRecord>();
+    public IReadOnlyCollection<ServiceRecord> ServiceRecords => _serviceRecords.ToList().AsReadOnly();
     public double Mileage => ServiceRecords.Sum(sr => sr.MilesDriven);
 
     public Car(string model, string make, int year, decimal price, UsageType usageType)
@@ -60,7 +61,7 @@ public abstract class Car
 
     public void AddServiceRecord(ServiceRecord record)
     {
-        ServiceRecords.Add(record ?? throw new ArgumentNullException(nameof(record)));
+        _serviceRecords.Add(record ?? throw new ArgumentNullException(nameof(record)));
     }
 
     public void MarkSold() => Status = CarStatus.Sold;
@@ -68,22 +69,18 @@ public abstract class Car
     // Back-reference to dealership
     public Dealership? Dealership { get; private set; }
 
-   // Internal method for association
-   internal void AssignToDealership(Dealership? dealership)
-   {
-       if (dealership == null)
-       {
-           Dealership = null;
-           return;
-       }
+    // Internal method for association
+    internal void AssignToDealership(Dealership? dealership)
+    {
+        if (dealership == null)
+        {
+            Dealership = null;
+            return;
+        }
 
-       if (Dealership != null && Dealership != dealership)
-           throw new InvalidOperationException("This car is already assigned to a different dealership.");
+        if (Dealership != null && Dealership != dealership)
+            throw new InvalidOperationException("This car is already assigned to a different dealership.");
 
-       Dealership = dealership;
-   }
-
-
+        Dealership = dealership;
+    }
 }
-
-

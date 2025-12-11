@@ -94,16 +94,18 @@ public abstract class Car
     {
         if (warranty == null)
             throw new ArgumentNullException(nameof(warranty));
-        
+
         if (warranty.Car != null && warranty.Car != this)
             throw new InvalidOperationException("This warranty is already assigned to another car.");
-        
+
         if (_warranty != null && _warranty != warranty)
-            throw new InvalidOperationException("Car already has a warranty assigned.");
+            throw new InvalidOperationException("This car already has a warranty.");
 
         _warranty = warranty;
-        
-        warranty.LinkToCar(this); 
+
+        // reverse connection
+        if (warranty.Car != this)
+            warranty.LinkToCar(this);
     }
 
     public void RemoveWarranty()
@@ -111,11 +113,12 @@ public abstract class Car
         if (_warranty == null)
             return;
 
-        var w = _warranty;
+        var oldWarranty = _warranty;
         _warranty = null;
+        
+        if (oldWarranty.Car == this)
+            oldWarranty.Car = null;
 
-        w.Delete();
+        Warranty.Extent.Remove(oldWarranty);
     }
-
-
 }

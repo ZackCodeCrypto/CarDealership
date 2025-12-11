@@ -83,4 +83,36 @@ public abstract class Car
 
         Dealership = dealership;
     }
+
+    private Warranty? _warranty;
+    public Warranty? Warranty => _warranty;
+
+    public void AssignWarranty(Warranty warranty)
+    {
+        if (warranty == null)
+            throw new ArgumentNullException(nameof(warranty));
+        
+        if (warranty.Car != null && warranty.Car != this)
+            throw new InvalidOperationException("This warranty is already assigned to another car.");
+        
+        if (_warranty != null && _warranty != warranty)
+            throw new InvalidOperationException("Car already has a warranty assigned.");
+
+        _warranty = warranty;
+        
+        warranty.LinkToCar(this); 
+    }
+
+    public void RemoveWarranty()
+    {
+        if (_warranty == null)
+            return;
+
+        var w = _warranty;
+        _warranty = null;
+
+        w.Delete();
+    }
+
+
 }

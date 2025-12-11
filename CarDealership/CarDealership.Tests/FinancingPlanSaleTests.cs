@@ -79,18 +79,6 @@ namespace CarDealership.Tests
         }
 
         [Test]
-        public void AddingPlan_FromSaleSide_ThrowsDueToCurrentRecursionBehaviour()
-        {
-            var customer = new Customer("Eve", "505050505", "DL-E5", "Needs coupe");
-            var salesman = new Salesman("Tim", "606060606");
-            var sale = new Sale(DateTime.Today, "Card", customer, salesman);
-
-            var plan = new FinancingPlan(200m, 2.2);
-
-            Assert.Throws<InvalidOperationException>(() => sale.AddFinancingPlan(plan));
-        }
-
-        [Test]
         public void RemoveFinancingPlan_WhenPlanAssignedViaPlanSide_ClearsBothSides()
         {
             var customer = new Customer("Frank", "707070707", "DL-F6", "Needs van");

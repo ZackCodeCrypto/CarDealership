@@ -23,7 +23,7 @@ public class Warranty
     public bool IsActive => DateTime.Today >= StartDate && DateTime.Today <= EndDate;
     
     // Reference to Car for composition
-    public Car? Car { get; set; }
+    public Car? Car { get; private set; }
     
     public static ExtentRepository<Warranty> Extent = new();
 

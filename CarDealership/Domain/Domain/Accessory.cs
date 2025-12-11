@@ -22,6 +22,8 @@ public class Accessory
             : value;
     }
 
+    public Car? Car { get; private set; }
+
     public string AccessoryType { get; set; }
 
     public static ExtentRepository<Accessory> Extent = new();
@@ -33,5 +35,26 @@ public class Accessory
         Price = price;
 
         Extent.Add(this);
+    }
+
+    public void AssignToCar(Car car)
+    {
+        ArgumentNullException.ThrowIfNull(car);
+        
+        if (Car != null)
+            throw new InvalidOperationException("Accessory is already assigned to a car.");
+
+        Car = car;
+        Car.AddAccessory(this);
+    }
+
+    public void RemoveFromCar()
+    {
+        if (Car == null)
+            return;
+
+        var previousCar = Car;
+        Car = null;
+        previousCar.RemoveAccessory(this);
     }
 }

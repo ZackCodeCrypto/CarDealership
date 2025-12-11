@@ -9,6 +9,7 @@ public abstract class Car
     private int _year;
     private decimal _price;
     private HashSet<ServiceRecord> _serviceRecords = [];
+    private HashSet<Accessory> _accessories = [];
 
     public Guid VIN { get; internal set; } = Guid.NewGuid();
 
@@ -48,6 +49,7 @@ public abstract class Car
     public UsageType UsageType { get; set; }
     public CarStatus Status { get; private set; } = CarStatus.Available;
     public IReadOnlyCollection<ServiceRecord> ServiceRecords => _serviceRecords.ToList().AsReadOnly();
+    public IReadOnlyCollection<Accessory> Accessories => _accessories.ToList().AsReadOnly();
     public double Mileage => ServiceRecords.Sum(sr => sr.MilesDriven);
 
     public Car(string model, string make, int year, decimal price, UsageType usageType)
@@ -117,5 +119,27 @@ public abstract class Car
         w.Delete();
     }
 
+    public void AddAccessory(Accessory accessory)
+    {
+        ArgumentNullException.ThrowIfNull(accessory);
 
+        if (accessory.Car != null && accessory.Car != this)
+            throw new InvalidOperationException("This accessory is already assigned to another car.");
+
+        if (_accessories.Contains(accessory))
+            return;
+
+        _accessories.Add(accessory);
+        accessory.AssignToCar(this);
+    }
+
+    public void RemoveAccessory(Accessory accessory)
+    {
+        ArgumentNullException.ThrowIfNull(accessory);
+
+        if (_accessories.Remove(accessory))
+        {
+            accessory.RemoveFromCar();
+        }
+    }
 }

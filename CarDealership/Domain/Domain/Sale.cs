@@ -62,10 +62,15 @@ public class Sale
 
     public void AddFinancingPlan(FinancingPlan plan)
     {
+        ArgumentNullException.ThrowIfNull(plan);
+
+        if (FinancingPlan == plan)
+            return;
+
         if (FinancingPlan != null)
             throw new InvalidOperationException("A financing plan is already assigned to this sale.");
 
-        FinancingPlan = plan ?? throw new ArgumentNullException(nameof(plan));
+        FinancingPlan = plan;
         plan.AssignToSale(this);
     }
 

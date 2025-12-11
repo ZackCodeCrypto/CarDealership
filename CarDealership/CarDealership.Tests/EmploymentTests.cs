@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using NUnit.Framework;
-using CarDealership.Domain;
+﻿using CarDealership.Domain;
 
 namespace CarDealership.Tests;
 
@@ -68,7 +65,6 @@ public class EmploymentTests
         var endDate = DateTime.Today;
         employment.TerminateEmployment(endDate);
 
-        // original object updated
         Assert.That(employment.EndDate, Is.EqualTo(endDate));
         Assert.That(employment.IsActive, Is.False, "Employment terminated on or before today should be inactive.");
 
@@ -91,10 +87,8 @@ public class EmploymentTests
 
         var employment = new Employment(dealership, mechanic, start, 36000m);
 
-        // update original
         employment.Salary = 42000m;
 
-        // the same instance referenced through mechanic should see the update
         var associated = mechanic.Employments.First(e => ReferenceEquals(e, employment));
         Assert.That(associated.Salary, Is.EqualTo(42000m));
     }
@@ -108,11 +102,10 @@ public class EmploymentTests
 
         var employment = new Employment(dealership, manager, start, 70000m);
 
-        // sanity: present before delete
         Assert.That(manager.Employments, Has.Member(employment));
         Assert.That(dealership.Employments, Has.Member(employment));
 
-        employment.Delete();
+        employment.ClearReferences();
 
         Assert.That(manager.Employments, Does.Not.Contain(employment), "Employment should be removed from employee after delete.");
         Assert.That(dealership.Employments, Does.Not.Contain(employment), "Employment should be removed from dealership after delete.");

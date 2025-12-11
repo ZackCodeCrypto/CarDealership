@@ -12,7 +12,6 @@ public class CustomerTestDrivesTests
         return new PetrolCar("ModelX", "BrandY", 2020, 20000m, UsageType.NewCar, 45, 200);
     }
 
-    // Adding a TestDrive associates it with the right customer
     [Test]
     public void AddTestDrive_AssociatesBothSides()
     {
@@ -25,7 +24,6 @@ public class CustomerTestDrivesTests
         Assert.That(td.Customer, Is.EqualTo(c));
     }
 
-    // Removing a TestDrive removes it from the customer's list
     [Test]
     public void RemoveTestDrive_UnlinksFromCustomer()
     {
@@ -38,7 +36,6 @@ public class CustomerTestDrivesTests
         Assert.That(!c.TestDrives.Contains(td));
     }
 
-    // Can't add the same TestDrive twice
     [Test]
     public void AddTestDrive_DoesNotDuplicate()
     {
@@ -53,7 +50,6 @@ public class CustomerTestDrivesTests
         Assert.That(c.TestDrives.Count, Is.EqualTo(1));
     }
 
-    // Create TestDrive with null customer throws
     [Test]
     public void Constructor_Throws_WhenCustomerIsNull()
     {
@@ -63,7 +59,6 @@ public class CustomerTestDrivesTests
             new TestDrive(DateTime.Today.AddDays(-1), 10, 5, null!, car));
     }
 
-    // CHange customer on a TestDrive correctly reassigns ownership
     [Test]
     public void ModifyingAssociation_ChangesOwningCustomer()
     {

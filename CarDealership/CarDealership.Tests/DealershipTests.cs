@@ -23,8 +23,8 @@ public class DealershipTests
         var car2 = new PetrolCar("C", "D", 2020, 10000m, UsageType.NewCar, 60, 140);
         car2.MarkSold();
 
-        d.AddCarByVin(car1);
-        d.AddCarByVin(car2);
+        d.AddCar(car1);
+        d.AddCar(car2);
 
         Assert.That(d.CarsAvailable, Is.EqualTo(1));
     }
@@ -35,7 +35,7 @@ public class DealershipTests
         var d = new Dealership("Koons", "Tyson's Corner");
         var car = new PetrolCar("A", "B", 2020, 10000m, UsageType.NewCar, 60, 140);
 
-        d.AddCarByVin(car);
+        d.AddCar(car);
 
         Assert.That(d.GetCarByVin(car.VIN), Is.EqualTo(car));
         Assert.That(car.Dealership, Is.EqualTo(d));
@@ -49,9 +49,9 @@ public class DealershipTests
 
         var car = new PetrolCar("A", "B", 2020, 10000m, UsageType.NewCar, 60, 140);
 
-        d1.AddCarByVin(car);
+        d1.AddCar(car);
 
-        Assert.That(() => d2.AddCarByVin(car),
+        Assert.That(() => d2.AddCar(car),
             Throws.InvalidOperationException);
     }
 
@@ -61,7 +61,7 @@ public class DealershipTests
         var d = new Dealership("Koons", "Tyson's Corner");
         var car = new PetrolCar("A", "B", 2020, 10000m, UsageType.NewCar, 60, 120);
 
-        d.AddCarByVin(car);
+        d.AddCar(car);
 
         d.RemoveCarByVin(car.VIN);
 
@@ -91,9 +91,9 @@ public class DealershipTests
             .GetProperty("VIN")!
             .SetValue(car2, car1.VIN);
 
-        d.AddCarByVin(car1);
+        d.AddCar(car1);
 
-        Assert.That(() => d.AddCarByVin(car2),
+        Assert.That(() => d.AddCar(car2),
             Throws.InvalidOperationException);
     }
 

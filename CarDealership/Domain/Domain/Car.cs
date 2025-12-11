@@ -70,7 +70,7 @@ public abstract class Car
     public Dealership? Dealership { get; private set; }
 
     // Internal method for association
-    internal void AssignToDealership(Dealership? dealership)
+    public void AssignToDealership(Dealership? dealership)
     {
         if (dealership == null)
         {
@@ -82,5 +82,8 @@ public abstract class Car
             throw new InvalidOperationException("This car is already assigned to a different dealership.");
 
         Dealership = dealership;
+
+        if (!dealership.Cars.Contains(this))
+            dealership.AddCar(this);
     }
 }

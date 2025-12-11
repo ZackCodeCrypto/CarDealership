@@ -54,7 +54,7 @@ public class Dealership
     }
 
     // Add car using VIN as qualifier
-    public void AddCarByVin(Car car)
+    public void AddCar(Car car)
     {
         ArgumentNullException.ThrowIfNull(car);
 
@@ -79,7 +79,7 @@ public class Dealership
         car.AssignToDealership(null);
     }
 
-    internal void AddEmployment(Employment employment)
+    public void AddEmployment(Employment employment)
     {
         ArgumentNullException.ThrowIfNull(employment);
 
@@ -92,7 +92,7 @@ public class Dealership
         _employments.Add(employment);
     }
 
-    internal void RemoveEmployment(Employment employment)
+    public void RemoveEmployment(Employment employment)
     {
         ArgumentNullException.ThrowIfNull(employment);
         _employments.Remove(employment);

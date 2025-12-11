@@ -12,6 +12,7 @@ public class Sale
     public Car? Car { get; }
     public IList<Accessory> Accessories { get; } = new List<Accessory>();
     public InsurancePolicy? InsurancePolicy { get; }
+    public FinancingPlan? FinancingPlan { get; private set; }
 
     // derived attribute: /totalPrice
     public decimal TotalPrice
@@ -57,5 +58,24 @@ public class Sale
         if (accessories != null)
             foreach (var a in accessories)
                 Accessories.Add(a);
+    }
+
+    public void AddFinancingPlan(FinancingPlan plan)
+    {
+        if (FinancingPlan != null)
+            throw new InvalidOperationException("A financing plan is already assigned to this sale.");
+
+        FinancingPlan = plan ?? throw new ArgumentNullException(nameof(plan));
+        plan.AssignToSale(this);
+    }
+
+    public void RemoveFinancingPlan()
+    {
+        if (FinancingPlan == null)
+            return;
+
+        var plan = FinancingPlan;
+        FinancingPlan = null;
+        plan.RemoveSale(this);
     }
 }

@@ -61,7 +61,7 @@ namespace CarDealership.Domain
             EndDate = endDate;
         }
 
-        public void Delete()
+        public void ClearReferences()
         {
             Employee.RemoveEmployment(this);
             Dealership.RemoveEmployment(this);

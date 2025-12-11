@@ -21,21 +21,34 @@ public class Warranty
     public DateTime EndDate { get; }
     // Derived attribute
     public bool IsActive => DateTime.Today >= StartDate && DateTime.Today <= EndDate;
-
+    
+    // Reference to Car for composition
+    public Car? Car { get; private set; }
+    
     public static ExtentRepository<Warranty> Extent = new();
 
     public Warranty(DateTime startDate, DateTime endDate, string terms)
     {
         if (startDate > endDate)
             throw new ArgumentException("Start date cannot be after end date.");
-
-        if (endDate < DateTime.Today.AddYears(-30))
-            throw new ArgumentOutOfRangeException(nameof(endDate), "End date unrealistically old.");
-
+        
         StartDate = startDate;
         EndDate = endDate;
         Terms = terms;
 
         Extent.Add(this);
     }
+    
+    internal void LinkToCar(Car car)
+    {
+        Car = car;
+    }
+
+    internal void Delete()
+    {
+        Car = null;
+        Extent.Remove(this);
+    }
 }
+
+

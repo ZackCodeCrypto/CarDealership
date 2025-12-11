@@ -1,9 +1,12 @@
 ﻿namespace CarDealership.Domain;
 
-public abstract class Employee : Person
+public abstract class Employee : Person, IManageable
 {
     private HashSet<string> _contactNumbers;
     private HashSet<Employment> _employments = [];
+    
+    private Manager? _manager;
+    public Manager? Manager => _manager;
 
     public IReadOnlyList<string> ContactNumbers => _contactNumbers.ToList().AsReadOnly();
 
@@ -25,6 +28,35 @@ public abstract class Employee : Person
             _contactNumbers.Add(contactNumber);
         }
     }
+    
+    public void AssignManager(Manager manager)
+    {
+        ArgumentNullException.ThrowIfNull(manager);
+
+        if (ReferenceEquals(this, manager))
+            throw new InvalidOperationException("An employee cannot manage themselves.");
+
+        if (_manager == manager)
+            return;
+        
+        _manager?.RemoveManagedEmployee(this, updateEmployeeSide: false);
+
+        _manager = manager;
+
+        manager.AddManagedEmployee(this, updateEmployeeSide: false);
+    }
+    
+    public void RemoveManager()
+    {
+        if (_manager == null)
+            return;
+
+        var oldManager = _manager;
+        _manager = null;
+        
+        oldManager.RemoveManagedEmployee(this, updateEmployeeSide: false);
+    }
+
 
     public void RemoveContactNumber(string contactNumber)
     {

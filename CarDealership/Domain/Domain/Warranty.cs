@@ -39,14 +39,32 @@ public class Warranty
         Extent.Add(this);
     }
     
-    internal void LinkToCar(Car car)
+    public void LinkToCar(Car car)
     {
-        Car = car;
-    }
+        if (car == null)
+            throw new ArgumentNullException(nameof(car));
 
-    internal void Delete()
+        if (Car != null && Car != car)
+            throw new InvalidOperationException("This warranty is already linked to another car.");
+
+        Car = car;
+
+        // reverse connection
+        if (car.Warranty != this)
+            car.AssignWarranty(this);
+    }
+    
+    public void RemoveFromCar()
     {
+        if (Car == null)
+            return;
+
+        var previous = Car;
         Car = null;
+
+        if (previous.Warranty != null)
+            previous.RemoveWarranty();
+
         Extent.Remove(this);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CarDealership.Repositories;
+using System.Text.Json.Serialization;
 
 namespace CarDealership.Domain;
 
@@ -22,6 +23,7 @@ public class Accessory
             : value;
     }
 
+    [JsonIgnore]
     public Car? Car { get; private set; }
 
     public string AccessoryType { get; set; }

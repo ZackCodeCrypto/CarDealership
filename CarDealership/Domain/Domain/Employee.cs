@@ -1,6 +1,6 @@
 ﻿namespace CarDealership.Domain;
 
-public abstract class Employee : Person, IManageable
+public abstract class Employee : Person
 {
     private HashSet<string> _contactNumbers;
     private HashSet<Employment> _employments = [];

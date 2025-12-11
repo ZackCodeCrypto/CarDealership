@@ -2,7 +2,7 @@
 
 namespace CarDealership.Domain;
 
-public class Manager : Employee, IManageable
+public class Manager : Employee
 {
     private string _department;
     

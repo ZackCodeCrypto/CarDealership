@@ -8,7 +8,7 @@ public class Sale
     private DateTime _saleDate;
     public string MethodOfPayment { get; set; }
     public Customer Customer { get; }
-    public Salesman Salesman { get; }
+    public Employee Salesman { get; }
     public Car? Car { get; }
     public IList<Accessory> Accessories { get; } = new List<Accessory>();
     public InsurancePolicy? InsurancePolicy { get; }
@@ -43,7 +43,7 @@ public class Sale
         DateTime saleDate,
         string methodOfPayment,
         Customer customer,
-        Salesman salesman,
+        Employee salesman,
         Car? car = null,
         InsurancePolicy? insurancePolicy = null,
         IEnumerable<Accessory>? accessories = null)

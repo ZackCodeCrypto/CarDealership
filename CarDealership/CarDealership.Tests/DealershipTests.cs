@@ -96,5 +96,5 @@ public class DealershipTests
         Assert.That(() => d.AddCar(car2),
             Throws.InvalidOperationException);
     }
-
+    
 }

@@ -9,7 +9,7 @@ public class EmploymentTests
     public void Constructor_AddsEmploymentToAssociations()
     {
         var dealership = new Dealership("Main", "Downtown");
-        var salesman = new Salesman("Sam Sales", "123456789");
+        var salesman = new Employee("Sam Sales", "123456789");
         var start = DateTime.Today.AddYears(-1);
 
         var employment = new Employment(dealership, salesman, start, 50000m);
@@ -23,7 +23,7 @@ public class EmploymentTests
     public void Constructor_EndDateBeforeStart_Throws()
     {
         var dealership = new Dealership("Main", "Downtown");
-        var salesman = new Salesman("Sam Sales", "123456789");
+        var salesman = new Employee("Sam Sales", "123456789");
         var start = DateTime.Today;
         var end = start.AddDays(-1);
 
@@ -35,7 +35,7 @@ public class EmploymentTests
     public void StartDate_InFuture_Throws()
     {
         var dealership = new Dealership("Main", "Downtown");
-        var salesman = new Salesman("Sam Sales", "123456789");
+        var salesman = new Employee("Sam Sales", "123456789");
         var future = DateTime.Today.AddDays(1);
 
         Assert.That(() => new Employment(dealership, salesman, future, 30000m),
@@ -46,7 +46,7 @@ public class EmploymentTests
     public void Salary_Negative_Throws()
     {
         var dealership = new Dealership("Main", "Downtown");
-        var salesman = new Salesman("Sam Sales", "123456789");
+        var salesman = new Employee("Sam Sales", "123456789");
         var start = DateTime.Today.AddYears(-1);
 
         Assert.That(() => new Employment(dealership, salesman, start, -1m),
@@ -57,7 +57,7 @@ public class EmploymentTests
     public void TerminateEmployment_SetsEndDateAndMakesInactive_ReflectedInAssociations()
     {
         var dealership = new Dealership("Main", "Downtown");
-        var salesman = new Salesman("Sam Sales", "123456789");
+        var salesman = new Employee("Sam Sales", "123456789");
         var start = DateTime.Today.AddYears(-1);
 
         var employment = new Employment(dealership, salesman, start, 45000m);
@@ -82,7 +82,7 @@ public class EmploymentTests
     public void UpdatingSalary_IsVisibleThroughAssociations()
     {
         var dealership = new Dealership("Branch", "Uptown");
-        var mechanic = new Mechanic("Mick Mechanic", "987654321", "mick@example.com", "ASE");
+        var mechanic = new Employee("Mick Mechanic", "987654321", "ASE", "mick@example.com");
         var start = DateTime.Today.AddYears(-2);
 
         var employment = new Employment(dealership, mechanic, start, 36000m);
@@ -97,7 +97,7 @@ public class EmploymentTests
     public void Delete_RemovesEmploymentFromAssociations()
     {
         var dealership = new Dealership("Sub", "East");
-        var manager = new Manager("Mary Manager", "555555555", "mary@example.com", "Operations");
+        var manager = new Employee("Mary Manager", "555555555", "Operations", "mary@example.com");
         var start = DateTime.Today.AddYears(-1);
 
         var employment = new Employment(dealership, manager, start, 70000m);

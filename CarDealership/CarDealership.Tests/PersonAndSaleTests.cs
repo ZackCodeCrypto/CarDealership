@@ -32,7 +32,7 @@ public class PersonAndSaleTests
     public void Sale_TotalPrice_ComputedFromParts()
     {
         var customer = new Customer("Bob Ross", "571678534", "DL1", "Needs car");
-        var salesman = new Salesman("Nick Rochefort", "703457459", 40000m);
+        var salesman = new Employee("Nick Rochefort", "703457459", 40000m);
         var car = new PetrolCar("Model", "Make", 2020, 20000m, UsageType.NewCar, 60, 140);
         var accessory = new Accessory("GPS", "Electronics", 500m);
         var insurance = new InsurancePolicy("P1", "Provider", "Full", 800m);

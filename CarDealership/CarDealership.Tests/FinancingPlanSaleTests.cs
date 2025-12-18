@@ -9,7 +9,7 @@ namespace CarDealership.Tests
         public void AssigningPlanToSale_WithPlanAssignMethod_SetsBothSidesAndIsIdempotent()
         {
             var customer = new Customer("Alice", "111222333", "DL-A1", "Needs compact");
-            var salesman = new Salesman("Sam", "444555666");
+            var salesman = new Employee("Sam", "444555666");
             var sale = new Sale(DateTime.Today, "Card", customer, salesman);
 
             var plan = new FinancingPlan(300m, 3.5);
@@ -28,7 +28,7 @@ namespace CarDealership.Tests
         public void AssigningSecondPlanToSameSale_ThrowsInvalidOperation()
         {
             var customer = new Customer("Bob", "777888999", "DL-B2", "Needs SUV");
-            var salesman = new Salesman("Nina", "000111222");
+            var salesman = new Employee("Nina", "000111222");
             var sale = new Sale(DateTime.Today, "Cash", customer, salesman);
 
             var plan1 = new FinancingPlan(250m, 2.9);
@@ -43,7 +43,7 @@ namespace CarDealership.Tests
         public void RemovingPlan_FromSale_ClearsBothSides()
         {
             var customer = new Customer("Carl", "101010101", "DL-C3", "Needs sedan");
-            var salesman = new Salesman("Alex", "202020202");
+            var salesman = new Employee("Alex", "202020202");
             var sale = new Sale(DateTime.Today, "Card", customer, salesman);
 
             var plan = new FinancingPlan(150m, 1.9);
@@ -66,7 +66,7 @@ namespace CarDealership.Tests
         public void SalesCollectionAndSaleReference_AreSameInstanceReferences()
         {
             var customer = new Customer("Diane", "303030303", "DL-D4", "Needs hatchback");
-            var salesman = new Salesman("Zed", "404040404");
+            var salesman = new Employee("Zed", "404040404");
             var sale = new Sale(DateTime.Today, "Transfer", customer, salesman);
 
             var plan = new FinancingPlan(99m, 0.5);
@@ -82,7 +82,7 @@ namespace CarDealership.Tests
         public void RemoveFinancingPlan_WhenPlanAssignedViaPlanSide_ClearsBothSides()
         {
             var customer = new Customer("Frank", "707070707", "DL-F6", "Needs van");
-            var salesman = new Salesman("Olga", "808080808");
+            var salesman = new Employee("Olga", "808080808");
             var sale = new Sale(DateTime.Today, "Cash", customer, salesman);
 
             var plan = new FinancingPlan(180m, 3.0);
@@ -102,7 +102,7 @@ namespace CarDealership.Tests
         public void RemoveFinancingPlan_WhenNoPlanAssigned_IsNoOp()
         {
             var customer = new Customer("Gina", "909090909", "DL-G7", "Needs coupe");
-            var salesman = new Salesman("Hank", "101010101");
+            var salesman = new Employee("Hank", "101010101");
             var sale = new Sale(DateTime.Today, "Card", customer, salesman);
 
             Assert.DoesNotThrow(() => sale.RemoveFinancingPlan());

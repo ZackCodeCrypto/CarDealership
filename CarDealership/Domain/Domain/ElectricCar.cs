@@ -3,12 +3,12 @@ using CarDealership.Repositories;
 
 namespace CarDealership.Domain;
 
-public class ElectricCar : Car
+public class ElectricCar : Car, IElectricEngine
 {
-    private double _batterySize;
+    private int _batterySize;
     private int _motorPower;
 
-    public double BatterySize
+    public int BatterySize
     {
         get => _batterySize;
         set
@@ -32,7 +32,7 @@ public class ElectricCar : Car
     public static ExtentRepository<ElectricCar> Extent = new();
 
     public ElectricCar(string model, string make, int year, decimal price, UsageType usageType,
-        double batterySize, int motorPower)
+        int batterySize, int motorPower)
         : base(model, make, year, price, usageType)
     {
         BatterySize = batterySize;
@@ -41,3 +41,4 @@ public class ElectricCar : Car
         Extent.Add(this);
     }
 }
+

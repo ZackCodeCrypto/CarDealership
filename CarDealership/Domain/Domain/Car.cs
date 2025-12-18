@@ -52,7 +52,7 @@ public abstract class Car
     public IReadOnlyCollection<Accessory> Accessories => _accessories.ToList().AsReadOnly();
     public double Mileage => ServiceRecords.Sum(sr => sr.MilesDriven);
 
-    public Car(string model, string make, int year, decimal price, UsageType usageType)
+    protected Car(string model, string make, int year, decimal price, UsageType usageType)
     {
         Model = model;
         Make = make;
